@@ -6,6 +6,12 @@ A personal expense tracker that runs on the web, iOS and Android from one Expo c
 - **Card and transfers:** import your bank's Excel (.xls/.xlsx) or CSV export. Statements converted from PDF work too, and rows you've already imported are skipped.
 - **Dashboard:** monthly spending against the previous month, cash vs card, spending by category, a six-month trend and top merchants. Buy Now Pay Later repayments (StepPay, Afterpay and so on) and incoming money are shown but left out of spending totals.
 
+## Use it on the web
+
+The web app is published to GitHub Pages at **https://cprabhakaran.github.io/expense-tracker/** every time `main` changes (see `.github/workflows/deploy-web.yml`). To turn this on once, go to the repository's **Settings > Pages** and set **Source** to **GitHub Actions**.
+
+Until Supabase is connected, each browser keeps its own expenses. To make the site sync, add `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_ANON_KEY` under **Settings > Secrets and variables > Actions > Variables**, then re-run the workflow.
+
 ## Run it
 
 ```bash
