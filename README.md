@@ -51,4 +51,22 @@ npm run lint
 - `src/lib/categories.ts` has the category rules. Add merchants there to improve automatic categories.
 - `supabase/functions/scan-receipt/` is the Edge Function that sends receipt photos to Claude.
 
-Store builds for iOS and Android go through [EAS Build](https://docs.expo.dev/build/introduction/).
+## Put it on your phone
+
+The quickest way to try it is Expo Go: install it from the App Store or Play Store, run `npx expo start`, and scan the QR code.
+
+To install the app itself, builds run in the cloud on [EAS Build](https://docs.expo.dev/build/introduction/), so you don't need Xcode or Android Studio. The app ID on both platforms is `com.cprabhakaran.expensetracker`.
+
+1. Create a free account at [expo.dev](https://expo.dev), then run `npx eas-cli@latest login` and `npx eas-cli@latest init` in this folder. `init` links the project and adds its ID to `app.json`; commit that change.
+2. If you've connected Supabase, give the builds the same two values. `.env.local` isn't uploaded to EAS, so set them there once:
+
+   ```bash
+   npx eas-cli@latest env:set --environment preview --environment production --name EXPO_PUBLIC_SUPABASE_URL --value https://<project>.supabase.co --visibility plaintext
+   npx eas-cli@latest env:set --environment preview --environment production --name EXPO_PUBLIC_SUPABASE_ANON_KEY --value <anon key> --visibility plaintext
+   ```
+
+3. **Android:** `npx eas-cli@latest build -p android --profile preview` gives you an APK link. Open it on your phone to install. No Play Store account is needed.
+4. **iPhone:** this needs an [Apple Developer](https://developer.apple.com/programs/) account. Run `npx eas-cli@latest build -p ios --profile production` (EAS creates the certificates when you sign in to Apple), then `npx eas-cli@latest submit -p ios` to send it to TestFlight, and install it from the TestFlight app.
+5. **Google Play** (optional): `npx eas-cli@latest build -p android --profile production` makes the store bundle. The first upload has to be done by hand in the Play Console; after that `npx eas-cli@latest submit -p android` works.
+
+Build numbers are managed by EAS and go up on every production build.
